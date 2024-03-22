@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markdown File Viewer</title>
+</head>
+<body>
+    <div id="markdown-content">
+        <!-- Markdown -->
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script>
+        window.onload = function() {
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', 'test.md', true); // 文件
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        const markdownContent = xhr.responseText;
+                        const htmlContent = marked(markdownContent);
+                        document.getElementById('markdown-content').innerHTML = htmlContent;
+                    } else {
+                        console.error('Failed to fetch Markdown file');
+                    }
+                }
+            };
+            xhr.send();
+        };
+    </script>
+</body>
+</html>
